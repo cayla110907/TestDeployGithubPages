@@ -1,3 +1,4 @@
+
 name: Deploy React to GitHub Pages
 
 on:
@@ -19,6 +20,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     runs-on: ubuntu-latest
 
     steps:
@@ -30,12 +32,15 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: latihan_react1/package-lock.json
 
       - name: Install dependencies
         run: npm ci
+        working-directory: ./latihan_react1
 
       - name: Build React
         run: npm run build
+        working-directory: ./latihan_react1
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -43,7 +48,7 @@ jobs:
       - name: Upload build
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./latihan_react1/dist
 
       - name: Deploy
         id: deployment
